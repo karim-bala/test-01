@@ -110,10 +110,10 @@ def detect(save_img=False):
 
                     if save_img or view_img:  # Add bbox to image
                         label = f'{names[int(cls)]} {conf:.2f}'
-                        plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
+                        plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=5)
 
             # Print time (inference + NMS)
-            print(f'{s}Done. ({t2 - t1:.3f}s)')
+            print(f'{s} Yeah Done. ({t2 - t1:.3f}s)')
 
             # Stream results
             if view_img:
@@ -131,13 +131,16 @@ def detect(save_img=False):
                             vid_writer.release()  # release previous video writer
                         if vid_cap:  # video
                             fps = vid_cap.get(cv2.CAP_PROP_FPS)
+                            print(fps)
                             w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
                             h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
                         else:  # stream
                             fps, w, h = 30, im0.shape[1], im0.shape[0]
+                            print(fps)
                             save_path += '.mp4'
                         vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer.write(im0)
+         
 
     if save_txt or save_img:
         s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
